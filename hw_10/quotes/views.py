@@ -1,7 +1,6 @@
-from django.shortcuts import render
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
-from authors.models import Author
 from .models import Quote
 
 def main_quotes(request, page=1):
@@ -11,25 +10,24 @@ def main_quotes(request, page=1):
     quotes_on_page = paginator.page(page)
     return render(request, 'quotes/index.html', context={'quotes': quotes_on_page})
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .forms import QuoteForm
 
+@login_required
 def create_quote(request):
     if request.method == 'POST':
         form = QuoteForm(request.POST)
         if form.is_valid():
-            # Тут ви можете використовувати дані з форми, як раніше
+
             author = form.cleaned_data['author']
             quote = form.cleaned_data['quote']
             tags = form.cleaned_data['tags'] #.split(',')
 
-            # Збереження даних у PostgreSQL
+
             new_quote = Quote(author=author, quote=quote)
             new_quote.save()
 
-            # author, created = Author.objects.get_or_create(fullname=author_fullname)
 
-            # Додавання тегів до цитати
             new_quote.tags.add(*tags)
 
             return render(request, 'create_quote.html', {'author': author, 'quote': quote, 'tags': tags})
@@ -37,4 +35,4 @@ def create_quote(request):
         form = QuoteForm()
     return render(request, 'create_quote.html', {'form': form})
 
-# Create your views here.
+

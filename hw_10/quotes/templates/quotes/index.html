@@ -19,6 +19,12 @@
         <a href="{% url 'authors:author_detail' quote.author_id %}" target="_blank">(about)</a>
 
         </span>
+            <div class="tags">
+                Tags:
+                {% for tag in quote.tags.all %}
+                <a class="tag" >{{ tag.name }}</a>
+                {% endfor %}
+            </div>
 
         </div>
 

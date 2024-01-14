@@ -22,11 +22,6 @@
         <div class="col-md-4">
             <p>
                 {% if user.is_authenticated %}
-    <ul>
-        <a class="btn btn-primary" href="{% url 'quotes:create_quote' %}" role="button">Add quote</a></li>
-        <a class="btn btn-primary" href="{% url 'authors:create_author' %}" role="button">Add author</a></li>
-    </ul>
-
         <li>Welcome <b>{{ user.username }}!</b></li>
             <a class="btn btn-primary" href="{% url 'quotes:create_quote' %}" role="button">Add quote</a></li>
         <a class="btn btn-primary" href="{% url 'authors:create_author' %}" role="button">Add author</a></li>
